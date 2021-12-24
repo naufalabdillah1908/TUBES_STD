@@ -1,6 +1,6 @@
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    cout << "TEST" << endl;
     return 0;
 }
