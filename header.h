@@ -5,7 +5,7 @@
 
 using namespace std;
 
-
+typedef struct elm_penyanyi *adr_penyanyi;
 
 
 #endif // HEADER_H_INCLUDED
