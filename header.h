@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#define info(P) (P)->info
 #define next(P) (P)->next
+#define prev(P) (P)->prev
 #define first(L) ((L).first)
 #define nextLagu(P) ((P)->nextLagu)
 
@@ -17,6 +17,7 @@ struct elm_penyanyi
     string namaPenyanyi;
     string tempatTanggalLahir;
     adr_penyanyi next;
+    adr_penyanyi prev;
     adr_lagu nextLagu;
     adr_lagu prevLagu;
 
@@ -46,4 +47,8 @@ adr_penyanyi create_musisi(string nama, string ttl);
 adr_lagu create_lagu(string nama, string artis, int tahun_rilis);
 void create_listMusisi(musisi &M);
 void create_listLagu(lagu &L);
+void insert_penyanyi(musisi &M, adr_penyanyi P);
+void delete_penyanyi(musisi &M, adr_penyanyi &P);
+void show_penyanyi(musisi M);
+adr_penyanyi find_penyanyi(musisi M, string nama);
 #endif // HEADER_H_INCLUDED
