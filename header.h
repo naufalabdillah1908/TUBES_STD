@@ -12,25 +12,27 @@ using namespace std;
 
 typedef struct elm_penyanyi *adr_penyanyi;
 typedef struct elm_lagu *adr_lagu;
+
+struct elm_lagu
+{
+    string namaLagu;
+    string artis;
+    string collab;
+    int tahunRilis;
+    adr_lagu next;
+};
+
+struct lagu {
+    adr_lagu first;
+};
+
 struct elm_penyanyi
 {
     string namaPenyanyi;
     string tempatTanggalLahir;
     adr_penyanyi next;
     adr_penyanyi prev;
-    adr_lagu nextLagu;
-    adr_lagu prevLagu;
-
-};
-
-
-struct elm_lagu
-{
-    string namaLagu;
-    string artis;
-    int tahunRilis;
-    adr_lagu next;
-    adr_lagu prev;
+    lagu list_lagu;
 };
 
 struct musisi
@@ -39,16 +41,28 @@ struct musisi
     adr_penyanyi last;
 };
 
-struct lagu {
-    adr_lagu first;
-};
+
 
 adr_penyanyi create_musisi(string nama, string ttl);
-adr_lagu create_lagu(string nama, string artis, int tahun_rilis);
+adr_lagu create_lagu(string nama, string artis, string collab, int tahun_rilis);
 void create_listMusisi(musisi &M);
 void create_listLagu(lagu &L);
+
+//buat penyanyi
 void insert_penyanyi(musisi &M, adr_penyanyi P);
-void delete_penyanyi(musisi &M, adr_penyanyi &P);
+void delete_penyanyi(musisi &M, adr_penyanyi P);
 void show_penyanyi(musisi M);
 adr_penyanyi find_penyanyi(musisi M, string nama);
+
+
+//buat lagu
+void insert_lagu(lagu &L, adr_lagu P);
+void delete_lagu(lagu &L, string judul);
+adr_lagu find_lagu(lagu L, string judul);
+void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul);
+void del_lagu_from_musisi(musisi &M, lagu &L, string nama, string judul);
+
+//bersihin relasi
+void del_penyanyi(musisi &M, string nama);
+void del_lagu(musisi &M, lagu L, string nama, string judul);
 #endif // HEADER_H_INCLUDED

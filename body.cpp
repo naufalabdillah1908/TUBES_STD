@@ -6,19 +6,17 @@ adr_penyanyi create_musisi(string nama, string ttl){
     P->namaPenyanyi = nama;
     P->tempatTanggalLahir = ttl;
     P->next = NULL;
-    P->nextLagu = NULL;
-    P->prevLagu = NULL;
-
+    P->list_lagu.first = NULL;
     return P;
 }
-adr_lagu create_lagu(string nama, string artis, int tahun_rilis){
+adr_lagu create_lagu(string nama, string artis, string collab, int tahun_rilis){
     //create address buat lagu
     adr_lagu P = new elm_lagu;
     P->namaLagu = nama;
     P->artis = artis;
+    P->collab = collab;
     P->tahunRilis = tahun_rilis;
     P->next = NULL;
-    P->prev = NULL;
 
     return P;
 }
@@ -98,3 +96,109 @@ adr_penyanyi find_penyanyi(musisi M, string nama) {
         return NULL;
     }
 }
+
+void insert_lagu(lagu &L, adr_lagu P){
+    if (L.first == NULL) {
+        L.first = P;
+    } else {
+        P->next = L.first;
+        L.first = P;
+    }
+}
+
+void delete_lagu(lagu &L, string judul){
+    //menghapus lagu dari list
+    adr_lagu P = L.first;
+
+    while (P->namaLagu != judul || P->next != NULL) {
+        P = P->next;
+    }
+
+    if (P == NULL) {
+        cout<<"Tidak ada lagu yang ingin di delete"<<endl;
+    } else if (P == L.first && P->next == NULL) {
+        L.first = NULL;
+    } else if (P == L.first && P->next != NULL) {
+        P->next = L.first;
+        P = NULL;
+    } else if (P != L.first && P->next == NULL){
+        P = NULL;
+    } else {
+        adr_lagu Q = L.first;
+        while (Q->next != P) {
+            Q = Q->next;
+        }
+        Q->next = P->next;
+        P = NULL;
+    }
+
+}
+
+adr_lagu find_lagu(lagu L, string judul){
+    //mencari alamat lagu berdasarkan judul
+    adr_lagu P = L.first;
+    while(P->namaLagu != judul) {
+        P = next(P);
+    }
+    if(P->namaLagu == judul) {
+        return P;
+    } else {
+        return NULL;
+    }
+}
+
+
+void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul){
+    lagu L2;
+    create_listLagu(L2);
+
+    adr_penyanyi P = find_penyanyi(M, nama);
+    adr_lagu Q = find_lagu(L, judul);
+
+    if (P != NULL && Q != NULL) {
+        if (Q->artis == P->namaPenyanyi || Q->collab == P->namaPenyanyi) {
+            adr_lagu R = create_lagu(Q->namaLagu,Q->artis,Q->collab,Q->tahunRilis);
+
+            L2 = P->list_lagu;
+            insert_lagu(L2, R);
+        } else {
+            cout<<"Penyanyi tidak membuat Tersebut"<<endl;
+        }
+    } else {
+        cout<<"Tidak ada Penyanyi atau Lagu didalam list"<<endl;
+    }
+}
+
+void del_lagu_from_musisi(musisi &M, lagu L, string nama, string judul){
+    adr_penyanyi P;
+    lagu L2;
+
+    P = find_penyanyi(M, nama);
+    adr_lagu Q = find_lagu(L, judul);
+    if (P != NULL && Q != NULL) {
+        if (Q->artis == P->namaPenyanyi || Q->collab == P->namaPenyanyi) {
+            L2 = P->list_lagu;
+            delete_lagu(L2, judul);
+        }
+    }
+}
+
+void del_penyanyi(musisi &M, string nama){
+    //delete penyanyi sama relasinya
+}
+
+void del_lagu(musisi &M, lagu &L, string nama, string judul){
+    //delete lagu di dalam list dan lagu dalam semua musisi;
+    lagu L2;
+    adr_penyanyi P = M.first;
+    while (P != NULL) {
+        L2 = P->list_lagu;
+        delete_lagu(L2, judul);
+    }
+    delete_lagu(L, judul);
+}
+
+//blom kucek wkwk, pusing liatnya
+
+
+
