@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1640574523 source:d:\game design\github projects\tubes_std\main.cpp
+1640752471 source:d:\game design\github projects\tubes_std\main.cpp
 	"header.h"
 
-1640659165 d:\game design\github projects\tubes_std\header.h
+1640754321 d:\game design\github projects\tubes_std\header.h
 	<iostream>
 
 1640745419 source:c:\users\user\documents\github\tubes_std\main.cpp
@@ -12,5 +12,8 @@
 	<iostream>
 
 1640745404 source:c:\users\user\documents\github\tubes_std\body.cpp
+	"header.h"
+
+1640754521 source:d:\game design\github projects\tubes_std\body.cpp
 	"header.h"
 
