@@ -61,8 +61,15 @@ adr_lagu find_lagu(lagu L, string judul);
 void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul);
 void del_lagu_from_musisi(musisi &M, lagu &L, string nama, string judul);
 void show_lagu(musisi M, string nama);
+void show_all_lagu(lagu L);
 
 //bersihin relasi
 void del_penyanyi(musisi &M, string nama);
-void del_lagu(musisi &M, lagu L, string nama, string judul);
+void del_lagu(musisi &M, lagu &L, string judul);
+
+
+//buat menu
+int menu();
+
+
 #endif // HEADER_H_INCLUDED
