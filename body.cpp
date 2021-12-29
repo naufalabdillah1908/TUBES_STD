@@ -244,34 +244,28 @@ void show_all_lagu(lagu L){
 }
 
 void show_semua_musisi_dengan_lagunya(musisi M) {
-    lagu L2;
-
+//show all data, musisi dan lagunya
     adr_penyanyi P = M.first;
-    adr_lagu X = first(L2);
+    adr_lagu x;
+    int i = 0;
+    while (P != NULL) {
+        cout<<"["<<i++<<"]"<<endl;
+        cout<<"Nama Musisi: "<<P->nama<<endl;
+        cout<<"TTL: "<<P->tempatTanggalLahir<<endl;
 
-    L2 = P->list_lagu;
-    int i = 1, j = 1;
-
-    if (P == NULL) {
-        cout << "Tidak ada Penyanyi didalam list" << endl;
-    } else if (L2.first == NULL) {
-        cout << "tidak ada lagu yang dibuat oleh penyanyi" << endl;
-    } else {
-        while(P != NULL) {
-            cout << "[" << i++ << "]" << endl;
-            cout << "Nama : " << P->nama << endl;
-            cout << "TTL  : " << P->tempatTanggalLahir << endl;
-            cout << "Lagu yang dibuat : " << endl;
-            while (X != NULL) {
-                cout << "[" << j++ << "]" << endl;
-                cout << "Judul  : " << X->judul << endl;
-                cout << "Artis  : " << X->artis << endl;
-                cout << "Collab : " << X->collab << endl;
-                cout << "Rilis  : " << X->tahunRilis << endl;
-                X = next(X);
+        cout<<"Lagu yang dibuat:"<<endl;
+        x = P->list_lagu.first;
+        while (x != NULL) {
+            cout<<"-"<<x->judul;
+            if (x->collab != "-") {
+                cout<<" ft."<<x->collab<<endl;
+            } else {
+                cout<<endl;
             }
-            P = next(P);
+            x = x->next;
         }
+        P = P->next;
+        cout<<endl;
     }
 }
 
@@ -290,6 +284,7 @@ int menu(){
     cout<<"6. Show semua lagu yang ada di sistem"<<endl;
     cout<<"7. Show lagu yang dibuat oleh seorang penyanyi"<<endl;
     cout<<"8. Show semua penyanyi dengan lagunya"<<endl;
+    cout<<"0. Exit"<<endl;
     cout<<endl<<endl;
     cout<<"Input nomor: ";
     int angka;

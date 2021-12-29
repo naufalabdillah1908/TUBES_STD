@@ -2,6 +2,7 @@
 #define HEADER_H_INCLUDED
 
 #include <iostream>
+#include <string>
 
 #define next(P) (P)->next
 #define prev(P) (P)->prev
