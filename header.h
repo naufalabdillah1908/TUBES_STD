@@ -6,7 +6,6 @@
 #define next(P) (P)->next
 #define prev(P) (P)->prev
 #define first(L) ((L).first)
-#define nextLagu(P) ((P)->nextLagu)
 
 using namespace std;
 
@@ -15,7 +14,7 @@ typedef struct elm_lagu *adr_lagu;
 
 struct elm_lagu
 {
-    string namaLagu;
+    string judul;
     string artis;
     string collab;
     int tahunRilis;
@@ -28,7 +27,7 @@ struct lagu {
 
 struct elm_penyanyi
 {
-    string namaPenyanyi;
+    string nama;
     string tempatTanggalLahir;
     adr_penyanyi next;
     adr_penyanyi prev;
@@ -44,13 +43,13 @@ struct musisi
 
 
 adr_penyanyi create_musisi(string nama, string ttl);
-adr_lagu create_lagu(string nama, string artis, string collab, int tahun_rilis);
+adr_lagu create_lagu(string judul, string artis, string collab, int tahun_rilis);
 void create_listMusisi(musisi &M);
 void create_listLagu(lagu &L);
 
 //buat penyanyi
 void insert_penyanyi(musisi &M, adr_penyanyi P);
-void delete_penyanyi(musisi &M, adr_penyanyi P);
+void delete_penyanyi(musisi &M, string nama);
 void show_penyanyi(musisi M);
 adr_penyanyi find_penyanyi(musisi M, string nama);
 
@@ -61,6 +60,7 @@ void delete_lagu(lagu &L, string judul);
 adr_lagu find_lagu(lagu L, string judul);
 void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul);
 void del_lagu_from_musisi(musisi &M, lagu &L, string nama, string judul);
+void show_lagu(musisi M, string nama);
 
 //bersihin relasi
 void del_penyanyi(musisi &M, string nama);
