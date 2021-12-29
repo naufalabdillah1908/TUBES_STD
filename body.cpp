@@ -243,6 +243,42 @@ void show_all_lagu(lagu L){
     }
 }
 
+void show_semua_musisi_dengan_lagunya(musisi M) {
+    lagu L2;
+
+    adr_penyanyi P = M.first;
+    adr_lagu X = first(L2);
+
+    L2 = P->list_lagu;
+    int i = 1, j = 1;
+
+    if (P == NULL) {
+        cout << "Tidak ada Penyanyi didalam list" << endl;
+    } else if (L2.first == NULL) {
+        cout << "tidak ada lagu yang dibuat oleh penyanyi" << endl;
+    } else {
+        while(P != NULL) {
+            cout << "[" << i++ << "]" << endl;
+            cout << "Nama : " << P->nama << endl;
+            cout << "TTL  : " << P->tempatTanggalLahir << endl;
+            cout << "Lagu yang dibuat : " << endl;
+            while (X != NULL) {
+                cout << "[" << j++ << "]" << endl;
+                cout << "Judul  : " << X->judul << endl;
+                cout << "Artis  : " << X->artis << endl;
+                cout << "Collab : " << X->collab << endl;
+                cout << "Rilis  : " << X->tahunRilis << endl;
+                X = next(X);
+            }
+            P = next(P);
+        }
+    }
+}
+
+int count_lagu_dari_penyanyi(musisi M) {
+
+}
+
 int menu(){
     cout<<"--- Menu ---"<<endl<<endl;
     cout<<"Silahkan Pilih Apa yang anda ingin lakukan:"<<endl;

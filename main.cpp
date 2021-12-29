@@ -37,7 +37,8 @@ int main()
 
         P = create_musisi(nama, TTL);
         insert_penyanyi(M, P);
-
+        break;
+        // ini kek ngelooping gitu, gatau di aku aja atau engga
     case 2:
         cout<<"Masukkan Judul lagu: ";
         cin>>judul;
@@ -66,35 +67,35 @@ int main()
         if (iscollab == "Y") {
             add_lagu_to_musisi(M, L, pembuat2, judul);
         }
-
+        break;
     case 3:
         cout<<"Masukkan nama penyanyi yang ingin di delete: ";
         cin>>nama;
 
         del_penyanyi(M, nama);
-
+        break;
     case 4:
         cout<<"Masukkan Judul Lagu yang ingin di delete: ";
         cin>>judul;
 
         del_lagu(M, L, judul);
-
+        break;
     case 5:
         show_penyanyi(M);
-
+        break;
     case 6:
         show_all_lagu(L);
-
+        break;
     case 7:
         cout<<"Masukkan nama penyanyi: ";
         cin>>nama;
 
         show_lagu(M, nama);
-
+        break;
     case 8:
-
+        show_semua_musisi_dengan_lagunya(M);
+        break;
         }
     }
-
     return 0;
 }
