@@ -1,4 +1,6 @@
 #include "header.h"
+
+
 int main()
 {
     //list tetap
@@ -14,7 +16,7 @@ int main()
     adr_lagu X;
 
     //buat input penyanyi
-    string nama;
+    std::string nama;
     string TTL;
 
     //buat input lagu
@@ -24,33 +26,53 @@ int main()
     int tahun_rilis;
     string iscollab;
 
+    //buat ulang
+    string answer;
+
 
     int pilihan = menu();
+
     while (pilihan > 0 && pilihan <= 8){
         switch (pilihan) {
     case 1:
+        std::cin.ignore();
         cout<<"Masukkan nama Penyanyi: ";
-        cin>>nama;
+        std::getline(cin, nama);
+
 
         cout<<"Masukkan Tempat dan tanggal lahir Penyanyi: ";
-        cin>>TTL;
+        std::getline(cin, TTL);
 
         P = create_musisi(nama, TTL);
         insert_penyanyi(M, P);
 
+        show_penyanyi(M);
+
+        cout<<"Kembali ke menu utama? (Y/N): ";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
+
     case 2:
         cout<<"Masukkan Judul lagu: ";
-        cin>>judul;
+        std::cin.ignore();
+        std::getline(cin, judul);
 
         cout<<"Masukkan nama pembuat: ";
-        cin>>pembuat1;
+        std::getline(cin, pembuat1);
 
-        cout<<"Ada Collab?(Y/N)";
+        cout<<"Ada Collab?(Y/N): ";
         cin>>iscollab;
 
         if (iscollab == "Y") {
             cout<<"Masukkan nama collab: ";
-            cin>>pembuat2;
+            std::cin.ignore();
+            std::getline(cin, pembuat2);
         } else {
             pembuat2 = "-";
         }
@@ -61,37 +83,112 @@ int main()
         X = create_lagu(judul, pembuat1, pembuat2, tahun_rilis);
         insert_lagu(L, X);
 
+
         add_lagu_to_musisi(M, L, pembuat1, judul);
+
 
         if (iscollab == "Y") {
             add_lagu_to_musisi(M, L, pembuat2, judul);
         }
 
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
+
     case 3:
         cout<<"Masukkan nama penyanyi yang ingin di delete: ";
-        cin>>nama;
+        std::getline(cin, nama);
 
         del_penyanyi(M, nama);
 
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
+
     case 4:
         cout<<"Masukkan Judul Lagu yang ingin di delete: ";
-        cin>>judul;
+        std::getline(cin, judul);
 
         del_lagu(M, L, judul);
+
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
 
     case 5:
         show_penyanyi(M);
 
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
+
     case 6:
         show_all_lagu(L);
 
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
+
     case 7:
         cout<<"Masukkan nama penyanyi: ";
-        cin>>nama;
+        std::cin.ignore();
+        std::getline(cin, nama);
 
         show_lagu(M, nama);
 
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
+
     case 8:
+        cout<<"list musisi dan lagunya: "<<endl;
+        show_all_data(M);
+
+        cout<<"Kembali ke menu utama? (Y/N) :";
+            cin>>answer;
+            cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
 
         }
     }

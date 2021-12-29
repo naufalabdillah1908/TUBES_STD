@@ -243,6 +243,32 @@ void show_all_lagu(lagu L){
     }
 }
 
+void show_all_data(musisi M){
+    //show all data, musisi dan lagunya
+    adr_penyanyi P = M.first;
+    adr_lagu x;
+    int i = 0;
+    while (P != NULL) {
+        cout<<"["<<i++<<"]"<<endl;
+        cout<<"Nama Musisi: "<<P->nama<<endl;
+        cout<<"TTL: "<<P->tempatTanggalLahir<<endl;
+
+        cout<<"Lagu yang dibuat:"<<endl;
+        x = P->list_lagu.first;
+        while (x != NULL) {
+            cout<<"-"<<x->judul;
+            if (x->collab != "-") {
+                cout<<"ft."<<x->collab<<endl;
+            } else {
+                cout<<endl;
+            }
+            x = x->next;
+        }
+        P = P->next;
+        cout<<endl;
+    }
+}
+
 int menu(){
     cout<<"--- Menu ---"<<endl<<endl;
     cout<<"Silahkan Pilih Apa yang anda ingin lakukan:"<<endl;

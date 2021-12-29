@@ -2,6 +2,11 @@
 #define HEADER_H_INCLUDED
 
 #include <iostream>
+#include <string>
+#include <limits>
+
+
+
 
 #define next(P) (P)->next
 #define prev(P) (P)->prev
@@ -70,6 +75,9 @@ void del_lagu(musisi &M, lagu &L, string judul);
 
 //buat menu
 int menu();
+
+//show all
+void show_all_data(musisi M);
 
 
 #endif // HEADER_H_INCLUDED
