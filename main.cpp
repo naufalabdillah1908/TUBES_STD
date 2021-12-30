@@ -103,9 +103,10 @@ int main()
 
     case 3:
         cout<<"Masukkan nama penyanyi yang ingin di delete: ";
+        std::cin.ignore();
         std::getline(cin, nama);
 
-        del_penyanyi(M, nama);
+        delete_penyanyi(M, nama);
 
         cout<<"Kembali ke menu utama? (Y/N) :";
             cin>>answer;
