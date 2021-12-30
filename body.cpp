@@ -32,16 +32,17 @@ void create_listLagu(lagu &L){
 
 void insert_penyanyi(musisi &M, adr_penyanyi P){
     //memasukkan adr penyanyi ke list musisi
+    adr_penyanyi Q = M.first;
     if (M.first == NULL) {
         M.first = P;
         M.last = P;
     } else {
-        adr_penyanyi Q = M.first;
         while (next(Q) != NULL) {
             Q = next(Q);
         }
         next(Q) = P;
         prev(P) = Q;
+        M.last = P;
     }
 }
 
@@ -49,6 +50,7 @@ void delete_penyanyi(musisi &M, string nama) {
     //menghapus penyanyi dari list
     adr_penyanyi Prec = M.first;
     adr_penyanyi Q;
+
     if (Prec->nama == nama) {
         if (next(Prec) == NULL) {
             M.first = NULL;
@@ -60,7 +62,7 @@ void delete_penyanyi(musisi &M, string nama) {
         }
     } else if(nama == M.last->nama) {
         next(prev(M.last)) = NULL;
-        M.last = NULL;
+        M.last = prev(M.last);
     } else {
         while ((next(Prec))->nama != nama) {
             Prec = next(Prec);
@@ -69,9 +71,7 @@ void delete_penyanyi(musisi &M, string nama) {
         next(Prec) = next(Q);
         prev(next(Q)) = Prec;
         Q = NULL;
-
     }
-
 }
 
 void show_penyanyi(musisi M) {
@@ -94,13 +94,17 @@ void show_penyanyi(musisi M) {
 adr_penyanyi find_penyanyi(musisi M, string nama) {
     //mencari alamat penyanyi berdasarkan nama
     adr_penyanyi P = M.first;
-    while(P->nama != nama) {
-        P = next(P);
-    }
-    if(P->nama == nama) {
-        return P;
-    } else {
+    if (P == NULL) {
         return NULL;
+    } else {
+        while (P->nama != nama && next(P) != NULL) {
+            P = next(P);
+        }
+        if(P->nama == nama){
+            return P;
+        } else {
+            return NULL;
+        }
     }
 }
 
@@ -117,7 +121,7 @@ void delete_lagu(lagu &L, string judul){
     //menghapus lagu dari list
     adr_lagu P = L.first;
 
-    while (P->judul != judul || P->next != NULL) {
+    while (P->judul != judul && P->next != NULL) {
         P = P->next;
     }
 
@@ -160,6 +164,7 @@ void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul){
     adr_penyanyi P = find_penyanyi(M, nama);
     adr_lagu Q = find_lagu(L, judul);
 
+
     if (P != NULL && Q != NULL) {
         if (Q->artis == P->nama || Q->collab == P->nama) {
             adr_lagu R = create_lagu(Q->judul,Q->artis,Q->collab,Q->tahunRilis);
@@ -188,11 +193,11 @@ void del_lagu_from_musisi(musisi &M, lagu L, string nama, string judul){
 }
 
 void del_penyanyi(musisi &M, string nama){
-    //delete penyanyi sama relasinya
+    //delete penyanyi sama relasinyao
 }
 
 void del_lagu(musisi &M, lagu &L, string judul){
-    //delete lagu di dalam list dan lagu dalam semua musisi;
+    //delete lagu di dalam list dan lagu dalam semua musisi
     adr_penyanyi P = M.first;
     while (P != NULL) {
         delete_lagu(P->list_lagu, judul);
@@ -202,17 +207,16 @@ void del_lagu(musisi &M, lagu &L, string judul){
 
 //blom kucek wkwk, pusing liatnya
 void show_lagu(musisi M, string nama) {
-    lagu L2;
-
     //menampilkan lagu penyanyi berdasarkan nama yang dicari
     adr_penyanyi P = find_penyanyi(M, nama);
-    L2 = P->list_lagu;
+
     if (P == NULL) {
         cout << "Tidak ada Penyanyi didalam list" << endl;
-    } else if (L2.first == NULL) {
+    } else if (P->list_lagu.first == NULL) {
         cout << "tidak ada lagu yang dibuat oleh penyanyi" << endl;
     } else {
-        adr_lagu X = first(L2);
+
+        adr_lagu X = P->list_lagu.first;
         int i = 1;
         while (X != NULL) {
             cout << "[" << i++ << "]" << endl;
@@ -247,30 +251,30 @@ void show_semua_musisi_dengan_lagunya(musisi M) {
 //show all data, musisi dan lagunya
     adr_penyanyi P = M.first;
     adr_lagu x;
-    int i = 0;
-    while (P != NULL) {
-        cout<<"["<<i++<<"]"<<endl;
-        cout<<"Nama Musisi: "<<P->nama<<endl;
-        cout<<"TTL: "<<P->tempatTanggalLahir<<endl;
+    int i = 1;
+    if (P == NULL) {
+        cout << "Tidak ada Penyanyi dalam list" << endl;
+    } else {
+        while (P != NULL) {
+            cout<<"["<<i++<<"]"<<endl;
+            cout<<"Nama Musisi: "<<P->nama<<endl;
+            cout<<"TTL: "<<P->tempatTanggalLahir<<endl;
 
-        cout<<"Lagu yang dibuat:"<<endl;
-        x = P->list_lagu.first;
-        while (x != NULL) {
-            cout<<"-"<<x->judul;
-            if (x->collab != "-") {
-                cout<<" ft."<<x->collab<<endl;
-            } else {
-                cout<<endl;
+            cout<<"Lagu yang dibuat:"<<endl;
+            x = P->list_lagu.first;
+            while (x != NULL) {
+                cout<<"-"<<x->judul;
+                if (x->collab != "-") {
+                    cout<<" ft."<<x->collab<<endl;
+                } else {
+                    cout<<endl;
+                }
+                x = x->next;
             }
-            x = x->next;
+            P = P->next;
+            cout<<endl;
         }
-        P = P->next;
-        cout<<endl;
     }
-}
-
-int count_lagu_dari_penyanyi(musisi M) {
-
 }
 
 int menu(){
@@ -278,7 +282,7 @@ int menu(){
     cout<<"Silahkan Pilih Apa yang anda ingin lakukan:"<<endl;
     cout<<"1. Input Penyanyi"<<endl;
     cout<<"2. Input Lagu"<<endl;
-    cout<<"3. Delete Penyanyi;"<<endl;
+    cout<<"3. Delete Penyanyi"<<endl;
     cout<<"4. Delete Lagu"<<endl;
     cout<<"5. Show semua Penyanyi"<<endl;
     cout<<"6. Show semua lagu yang ada di sistem"<<endl;
