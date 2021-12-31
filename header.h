@@ -75,5 +75,6 @@ int menu();
 
 //tugas
 void show_semua_musisi_dengan_lagunya(musisi M);
+void show_lagu_penyanyi_berdasarkan_rilis(musisi M, string nama);
 
 #endif // HEADER_H_INCLUDED
