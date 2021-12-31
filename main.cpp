@@ -32,7 +32,7 @@ int main()
 
     int pilihan = menu();
 
-    while (pilihan > 0 && pilihan <= 8){
+    while (pilihan > 0 && pilihan <= 9){
         switch (pilihan) {
     case 1:
         std::cin.ignore();
@@ -120,6 +120,7 @@ int main()
 
     case 4:
         cout<<"Masukkan Judul Lagu yang ingin di delete: ";
+        std::cin.ignore();
         std::getline(cin, judul);
 
         del_lagu(M, L, judul);
@@ -191,6 +192,22 @@ int main()
                 break;
             }
 
+    case 9:
+        cout<<"Masukkan nama penyanyi: ";
+        std::cin.ignore();
+        std::getline(cin, nama);
+
+        show_lagu_penyanyi_berdasarkan_rilis(M, nama);
+
+        cout<<"Kembali ke menu utama? (Y/N) :";
+        cin>>answer;
+        cout<<endl;
+            if (answer == "Y") {
+                pilihan = menu();
+                break;
+            } else{
+                break;
+            }
         }
     }
 
