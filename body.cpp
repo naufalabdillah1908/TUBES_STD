@@ -32,17 +32,13 @@ void create_listLagu(lagu &L){
 
 void insert_penyanyi(musisi &M, adr_penyanyi P){
     //memasukkan adr penyanyi ke list musisi
-    if (M.first == NULL) {
+    if(M.first == NULL && M.last == NULL) {
         M.first = P;
         M.last = P;
     } else {
         next(P) = M.first;
+        prev(next(P)) = P;
         M.first = P;
-        adr_penyanyi Q = M.first;
-        while (next(Q) != NULL)  {
-            Q = next(Q);
-        }
-        M.last = Q;
     }
 }
 
@@ -62,10 +58,8 @@ void delete_penyanyi(musisi &M, string nama) {
             P = NULL;
         }
     } else if (P == M.last) {
-        adr_penyanyi Q = prev(M.last);
-        M.last = Q;
-        next(P) = NULL;
-        prev(P) = NULL;
+        M.last = prev(M.last);
+        next(M.last) = NULL;
         P = NULL;
     } else {
         adr_penyanyi Q = M.first;
@@ -206,9 +200,11 @@ void del_lagu_from_musisi(musisi &M, lagu L, string nama, string judul){
 }
 */
 
+/*
 void del_penyanyi(musisi &M, string nama){
     //delete penyanyi sama relasinyao
 }
+*/
 
 void del_lagu(musisi &M, lagu &L, string judul){
     //delete lagu di dalam list dan lagu dalam semua musisi
@@ -309,25 +305,27 @@ void show_lagu_penyanyi_berdasarkan_rilis(musisi M, string nama) {
         adr_lagu X = P->list_lagu.first;
         adr_lagu Q;
 
+        cout << "Rilis berdasarkan? (terbaru/terlama) : ";
+        cin >> pilihan;
+
         if (X == NULL) {
             cout << "Lagu Kosong" << endl;
+        } else if (next(X) == NULL) {
+            Q = X;
         } else {
             rilis = X->tahunRilis;
 
-            cout << "Rilis berdasarkan? (terbaru/terlama) : ";
-            cin >> pilihan;
-
             if (pilihan == "terbaru") {
-                while (next(X) != NULL) {
-                    X = next(X);
-                    if (X->tahunRilis > rilis) {
+                while (X != NULL) {
+                    if (X->tahunRilis >= rilis) {
                         rilis = X->tahunRilis;
                         Q = X;
                     }
+                    X = next(X);
                 }
             } else if (pilihan == "terlama") {
-                while (next(X) != NULL) {
-                    if (X->tahunRilis < rilis) {
+                while (X != NULL) {
+                    if (X->tahunRilis <= rilis) {
                         rilis = X->tahunRilis;
                         Q = X;
                     }
