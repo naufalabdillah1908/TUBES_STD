@@ -137,6 +137,7 @@ void insert_lagu(lagu &L, adr_lagu P){
 void delete_lagu(lagu &L, string judul){
     //menghapus lagu dari list
     adr_lagu P = find_lagu(L, judul);
+    adr_lagu Q = L.first;
 
     if (P == NULL) {
         cout << "Tidak ada lagu dengan judul tersebut" << endl;
@@ -146,12 +147,14 @@ void delete_lagu(lagu &L, string judul){
         } else {
             L.first = next(P);
             next(P) = NULL;
-            P = NULL;
         }
     } else if (P != L.first && next(P) == NULL) {
-        P = NULL;
+        while (next(Q) != P) {
+            Q = next(Q);
+        }
+        next(Q) = NULL;
     } else {
-        adr_lagu Q = L.first;
+
         while (next(Q) != P) {
             Q = next(Q);
         }
@@ -163,17 +166,14 @@ void delete_lagu(lagu &L, string judul){
 adr_lagu find_lagu(lagu L, string judul){
     //mencari alamat lagu berdasarkan judul
     adr_lagu P = L.first;
+
     if (P == NULL) {
         return NULL;
     } else {
-        while (P->judul != judul && next(P) != NULL) {
+        while(judul != P->judul && P != NULL) {
             P = next(P);
         }
-        if(P->judul == judul){
-            return P;
-        } else {
-            return NULL;
-        }
+        return P;
     }
 }
 
@@ -184,8 +184,6 @@ void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul){
     adr_lagu Q = find_lagu(L, judul);
 
     if(P != NULL) {
-        Q->terhubungArtis = true;
-        Q->terhubungCollab = true;
 
         if(Q->artis == P->nama || Q->collab == P->nama) {
             adr_lagu R = create_lagu(Q->judul, Q->artis, Q->collab, Q->tahunRilis);
@@ -204,21 +202,31 @@ void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul){
 void del_lagu(musisi &M, lagu &L, string judul){
     //delete lagu di dalam list dan lagu dalam semua musisi
     adr_lagu P = find_lagu(L, judul);
-    if (P == NULL){
+
+    if (P == NULL) {
         cout << "Tidak ada lagu dengan judul tersebut" << endl;
     } else {
         adr_penyanyi X = find_penyanyi(M, P->artis);
-        delete_lagu(X->list_lagu, judul);
-        if(P->collab != "-") {
-            adr_penyanyi Y = find_penyanyi(M, P->collab);
+        cout << "X : " << X << endl;
+        if (X != NULL) {
+            cout << "X tidak NULL" << endl;
+            delete_lagu(X->list_lagu, judul);
+            cout << "X selesai delete lagu" << endl;
+        }
 
-            if (Y == NULL) {
-            } else {
+        if (P->collab != "-") {
+            adr_penyanyi Y = find_penyanyi(M, P->collab);
+            cout << "Y : " << Y << endl;
+            if (Y != NULL) {
+                cout << "Y tidak NULL" << endl;
                 delete_lagu(Y->list_lagu, judul);
+                cout << "Y selesai delete lagu" << endl;
             }
         }
+        delete_lagu(L, judul);
     }
-    delete_lagu(L, judul);
+    cout << "SELESAI PENGKONDISIAN" << endl;
+
 }
 
 void show_lagu(musisi M, string nama) {
