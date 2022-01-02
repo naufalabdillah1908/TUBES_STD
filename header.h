@@ -19,6 +19,8 @@ struct elm_lagu
     string artis;
     string collab;
     int tahunRilis;
+    bool terhubungArtis;
+    bool terhubungCollab;
     adr_lagu next;
 };
 
@@ -49,7 +51,7 @@ void create_listMusisi(musisi &M);
 void create_listLagu(lagu &L);
 
 //buat penyanyi
-void insert_penyanyi(musisi &M, adr_penyanyi P);
+void insert_penyanyi(musisi &M, lagu &L, adr_penyanyi P);
 void delete_penyanyi(musisi &M, string nama);
 void show_penyanyi(musisi M);
 adr_penyanyi find_penyanyi(musisi M, string nama);
