@@ -183,29 +183,6 @@ void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul){
     }
 }
 
-// aku gatau cara gabungin ke procedure del lagu yg lainnya
-/*
-void del_lagu_from_musisi(musisi &M, lagu L, string nama, string judul){
-    adr_penyanyi P;
-    lagu L2;
-
-    P = find_penyanyi(M, nama);
-    adr_lagu Q = find_lagu(L, judul);
-    if (P != NULL && Q != NULL) {
-        if (Q->artis == P->nama || Q->collab == P->nama) {
-            L2 = P->list_lagu;
-            delete_lagu(L2, judul);
-        }
-    }
-}
-*/
-
-/*
-void del_penyanyi(musisi &M, string nama){
-    //delete penyanyi sama relasinyao
-}
-*/
-
 void del_lagu(musisi &M, lagu &L, string judul){
     //delete lagu di dalam list dan lagu dalam semua musisi
     adr_lagu P = find_lagu(L, judul);
@@ -216,7 +193,11 @@ void del_lagu(musisi &M, lagu &L, string judul){
         delete_lagu(X->list_lagu, judul);
         if(P->collab != "-") {
             adr_penyanyi Y = find_penyanyi(M, P->collab);
-            delete_lagu(Y->list_lagu, judul);
+
+            if (Y == NULL) {
+            } else {
+                delete_lagu(Y->list_lagu, judul);
+            }
         }
     }
     delete_lagu(L, judul);
@@ -278,10 +259,13 @@ void show_semua_musisi_dengan_lagunya(musisi M) {
 
             cout<<"Lagu yang dibuat:"<<endl;
             x = P->list_lagu.first;
+            if (x == NULL) {
+                cout<<"   [TIDAK ADA]"<<endl;
+            }
             while (x != NULL) {
                 cout<<"-"<<x->judul;
-                if (x->collab != "-") {
-                    cout<<" ft."<<x->collab<<endl;
+                if (x->collab != "-")S {
+                    cout<<" ft. "<<x->collab<<endl;
                 } else {
                     cout<<endl;
                 }

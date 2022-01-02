@@ -46,8 +46,6 @@ int main()
         P = create_musisi(nama, TTL);
         insert_penyanyi(M, P);
 
-        show_penyanyi(M);
-
         cout<<"Kembali ke menu utama? (Y/N): ";
             cin>>answer;
             cout<<endl;
