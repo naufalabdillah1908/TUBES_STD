@@ -44,7 +44,7 @@ int main()
         std::getline(cin, TTL);
 
         P = create_musisi(nama, TTL);
-        insert_penyanyi(M, P);
+        insert_penyanyi(M, L, P);
 
         cout<<"Kembali ke menu utama? (Y/N): ";
             cin>>answer;

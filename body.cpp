@@ -16,6 +16,8 @@ adr_lagu create_lagu(string nama, string artis, string collab, int tahun_rilis){
     P->artis = artis;
     P->collab = collab;
     P->tahunRilis = tahun_rilis;
+    P->terhubungArtis;
+    P->terhubungCollab;
     P->next = NULL;
 
     return P;
@@ -30,7 +32,7 @@ void create_listLagu(lagu &L){
     L.first = NULL;
 }
 
-void insert_penyanyi(musisi &M, adr_penyanyi P){
+void insert_penyanyi(musisi &M, lagu &L, adr_penyanyi P){
     //memasukkan adr penyanyi ke list musisi
     if(M.first == NULL && M.last == NULL) {
         M.first = P;
@@ -39,6 +41,18 @@ void insert_penyanyi(musisi &M, adr_penyanyi P){
         next(P) = M.first;
         prev(next(P)) = P;
         M.first = P;
+    }
+
+    adr_lagu X = L.first;
+    while(X != NULL) {
+        if ((X->artis == P->nama) && (X->terhubungArtis == false)) {
+            add_lagu_to_musisi(M, L, P->nama, X->judul);
+            X->terhubungArtis = true;
+        } else if ((X->collab == P->nama) && (X->terhubungCollab == false)) {
+            add_lagu_to_musisi(M, L, P->nama, X->judul);
+            X->terhubungCollab = true;
+        }
+        X = next(X);
     }
 }
 
@@ -169,17 +183,21 @@ void add_lagu_to_musisi(musisi &M, lagu &L, string nama, string judul){
     adr_penyanyi P = find_penyanyi(M, nama);
     adr_lagu Q = find_lagu(L, judul);
 
+    if(P != NULL) {
+        Q->terhubungArtis = true;
+        Q->terhubungCollab = true;
 
-    if (P != NULL && Q != NULL) {
-        if (Q->artis == P->nama || Q->collab == P->nama) {
-            adr_lagu R = create_lagu(Q->judul,Q->artis,Q->collab,Q->tahunRilis);
+        if(Q->artis == P->nama || Q->collab == P->nama) {
+            adr_lagu R = create_lagu(Q->judul, Q->artis, Q->collab, Q->tahunRilis);
 
             insert_lagu(P->list_lagu, R);
         } else {
-            cout<<"Penyanyi tidak membuat Tersebut"<<endl;
+            Q->terhubungArtis = false;
+            Q->terhubungCollab = false;
         }
     } else {
-        cout<<"Tidak ada Penyanyi atau Lagu didalam list"<<endl;
+        Q->terhubungArtis = false;
+        Q->terhubungCollab = false;
     }
 }
 
@@ -264,7 +282,7 @@ void show_semua_musisi_dengan_lagunya(musisi M) {
             }
             while (x != NULL) {
                 cout<<"-"<<x->judul;
-                if (x->collab != "-")S {
+                if (x->collab != "-") {
                     cout<<" ft. "<<x->collab<<endl;
                 } else {
                     cout<<endl;
