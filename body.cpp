@@ -207,25 +207,25 @@ void del_lagu(musisi &M, lagu &L, string judul){
         cout << "Tidak ada lagu dengan judul tersebut" << endl;
     } else {
         adr_penyanyi X = find_penyanyi(M, P->artis);
-        cout << "X : " << X << endl;
+        //cout << "X : " << X << endl;
         if (X != NULL) {
-            cout << "X tidak NULL" << endl;
+            //cout << "X tidak NULL" << endl;
             delete_lagu(X->list_lagu, judul);
-            cout << "X selesai delete lagu" << endl;
+            //cout << "X selesai delete lagu" << endl;
         }
 
         if (P->collab != "-") {
             adr_penyanyi Y = find_penyanyi(M, P->collab);
-            cout << "Y : " << Y << endl;
+            //cout << "Y : " << Y << endl;
             if (Y != NULL) {
-                cout << "Y tidak NULL" << endl;
+                //cout << "Y tidak NULL" << endl;
                 delete_lagu(Y->list_lagu, judul);
-                cout << "Y selesai delete lagu" << endl;
+                //cout << "Y selesai delete lagu" << endl;
             }
         }
         delete_lagu(L, judul);
     }
-    cout << "SELESAI PENGKONDISIAN" << endl;
+    //cout << "SELESAI PENGKONDISIAN" << endl;
 
 }
 
@@ -291,7 +291,12 @@ void show_semua_musisi_dengan_lagunya(musisi M) {
             while (x != NULL) {
                 cout<<"-"<<x->judul;
                 if (x->collab != "-") {
-                    cout<<" ft. "<<x->collab<<endl;
+                    if (x->collab == P->nama) {
+                        cout<<" By "<<x->artis<<" ft. "<<x->collab<<endl;
+                    } else {
+                        cout<<" ft. "<<x->collab<<endl;
+                    }
+
                 } else {
                     cout<<endl;
                 }
