@@ -1,6 +1,11 @@
 #ifndef HEADER_H_INCLUDED
 #define HEADER_H_INCLUDED
 
+
+//Muhammad Naufal Abdillah - 1301201586
+//Johanes Raphael Nandaputra - 1301204243
+
+
 #include <iostream>
 #include <string>
 
